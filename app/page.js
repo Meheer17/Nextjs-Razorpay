@@ -18,7 +18,7 @@ export default function Home() {
 
     async function createProject () {
         try {
-            const data = await fetch(`http://localhost:3000/api/razorpay/createpayment`, {
+            const data = await fetch(`https://nextjs-razorpay.vercel.app/api/razorpay/createpayment`, {
                 method: 'POST',
                 headers:{
                     "Accept":"applocation/json",
