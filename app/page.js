@@ -25,7 +25,7 @@ export default function Home() {
                     "Content-Type": 'application/json'
                 },
                 body: JSON.stringify({
-                    amount: 50000,
+                    amount: 500,
                     contact: 8310697451,
                     name: "meheer",
                     email: "meherr17.j@gmail.com",
@@ -42,8 +42,21 @@ export default function Home() {
 					"description": ""+res.description+"",
 					"image": "https://dummyimage.com/600x400/000/fff",
 					"order_id": ""+res.order_id+"",
-					"handler": function (response){
-						console.log(response)
+					"handler": async function (response){
+                        const det = await fetch(`https://nextjs-razorpay.vercel.app/api/razorpay/verifypayment`, {
+                            method: 'POST',
+                            headers:{
+                                "Accept":"applocation/json",
+                                "Content-Type": 'application/json'
+                            },
+                            body: JSON.stringify({
+                                pid: response.razorpay_payment_id,
+                                oid: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                            })
+                        })
+                        const verify = await det.json()
+						console.log(await verify)
 						// console.log(instance.payments.fetch(response.))
 						alert(response);
 						// window.open("/","_self")
@@ -91,16 +104,6 @@ export default function Home() {
                 </form>
             </div>
             <Script src="https://checkout.razorpay.com/v1/checkout.js"/>
-            {/* <div style={{display:"inline-block"}}>
-                <p>Shoes</p>
-                <p><b>Amount:- Rs. 1500</b></p>
-                <form className="pay-form">
-                    <input type="hidden" name="name" value="Shoes"/>
-                    <input type="hidden" name="amount" value="1500"/>
-                    <input type="hidden" name="description" value="Shoes Buying"/>
-                    <input type="submit" value="Pay Now"/>
-                </form>
-            </div> */}
         </>
   )
 }

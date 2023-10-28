@@ -6,7 +6,6 @@ var razorpayInstance = new Razorpay({ key_id: process.env.KEY_ID, key_secret: pr
 export async function POST(req){
     const details = await req.json()
     const amount = details.amount*100
-    console.log(details, amount )
     const {name, email, contact, description } = details
     const options = {
         amount: amount,
@@ -15,13 +14,10 @@ export async function POST(req){
     }
     let error = false
     let orde;
-    console.log("hahha")
     const data = await razorpayInstance.orders.create(options, 
         (err, order)=>{
             if(!err){
-                console.log("Done")
                 orde = order
-                console.log(order)
                 error = false
 
             }
